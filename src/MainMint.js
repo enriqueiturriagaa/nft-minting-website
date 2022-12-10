@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ethers, BigNumber } from "ethers";
 import g2Punks from "./G2Punks.json";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 
 const g2PunksNFTAddress = "0xc21F2465d10711C3dbECd9073c25993fC2171Cb6";
 
@@ -19,7 +20,9 @@ const MainMint = ({ accounts, setAccounts }) => {
         signer
       );
       try {
-        const response = await contract.mint(BigNumber.from(mintAmount));
+        const response = await contract.mint(BigNumber.from(mintAmount), {
+          value: ethers.utils.parseEther((0.02 * mintAmount).toString()),
+        });
         console.log("response:", response);
       } catch (error) {
         console.log("error", error);
@@ -37,28 +40,92 @@ const MainMint = ({ accounts, setAccounts }) => {
   };
 
   return (
-    <div>
-      <h1>G2Punks</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-        malesuada lacus sit amet lorem lacinia, a finibus erat lobortis. Fusce
-        mollis metus nunc, iaculis malesuada urna blandit rhoncus. Nulla luctus
-        eu ex et faucibus. Vestibulum vehicula velit vitae libero maximus
-        posuere vitae nec sem. Ut at enim nisi.
-      </p>
-      {isConnected ? (
+    <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
+      <Box width="520px">
         <div>
-          <div>
-            <button onClick={handleDecrement}>-</button>
-            <input type="number" value={mintAmount} />
-            <button onClick={handleIncrement}>+</button>
-          </div>
-          <button onClick={handleMint}>Mint Now!</button>
+          <Text fontSize="48px" textShadow="0 5px #000000">
+            G2Punks
+          </Text>
+          <Text
+            fontSize="30px"
+            letterSpacing="-5.5%"
+            fontFamily="VT323"
+            textShadow="0 2px 2px #000000"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            malesuada lacus sit amet lorem lacinia, a finibus erat lobortis.
+          </Text>
         </div>
-      ) : (
-        <p>You must be connected to mint</p>
-      )}
-    </div>
+        {isConnected ? (
+          <div>
+            <Flex align="center" justify="center">
+              <Button
+                backgroundColor="#D6517D"
+                borderRadius="5px"
+                boxShadow="0px 2px 2px 1px #0f0f0f"
+                color="white"
+                cursor="pointer"
+                fontFamily="inherit"
+                padding="15px"
+                marginTop="10px"
+                onClick={handleDecrement}
+              >
+                -
+              </Button>
+              <Input
+                readOnly
+                fontFamily="inherit"
+                width="100px"
+                height="40px"
+                textAlign="center"
+                paddingLeft="19px"
+                marginTop="10px"
+                type="number"
+                type="number"
+                value={mintAmount}
+              />
+              <Button
+                backgroundColor="#D6517D"
+                borderRadius="5px"
+                boxShadow="0px 2px 2px 1px #0f0f0f"
+                color="white"
+                cursor="pointer"
+                fontFamily="inherit"
+                padding="15px"
+                marginTop="10px"
+                onClick={handleIncrement}
+              >
+                +
+              </Button>
+            </Flex>
+            <Button
+              backgroundColor="#D6517D"
+              borderRadius="5px"
+              boxShadow="0px 2px 2px 1px #0f0f0f"
+              color="white"
+              cursor="pointer"
+              fontFamily="inherit"
+              padding="15px"
+              marginTop="10px"
+              onClick={handleMint}
+            >
+              Mint Now!
+            </Button>
+          </div>
+        ) : (
+          <Text
+            marginTop="70px"
+            fontSize="30px"
+            letterSpacing="-5.5%"
+            fontFamily="VT323"
+            textShadow="0 3px #000000"
+            color="#D6517D"
+          >
+            You must be connected to mint
+          </Text>
+        )}
+      </Box>
+    </Flex>
   );
 };
 
