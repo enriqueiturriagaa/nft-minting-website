@@ -33,15 +33,15 @@ const NavBar = ({ accounts, setAccounts }) => {
 
       <Flex justify="space-around" align="center" width="40%" padding="30px">
         {/* Right Side */}
-        <Box margin="0 15px">About</Box>
+        {/* <Box margin="0 15px">About</Box>
         <Spacer />
         <Box margin="0 15px">Mint</Box>
         <Spacer />
         <Box margin="0 15px">Team</Box>
-        <Spacer />
+        <Spacer /> */}
         {/* Connect Button */}
         {isConnected ? (
-          <Box margin="0 15px">Connected to {}</Box>
+          <Box margin="0 15px">Connected to {accounts[0]}</Box>
         ) : (
           <Button
             backgroundColor="#D6517D"
